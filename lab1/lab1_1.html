@@ -3,54 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Пенсионный калькулятор</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        label {
-            margin-bottom: 5px;
-        }
-
-        input,
-        textarea,
-        button {
-            padding: 8px;
-            font-size: 16px;
-        }
-
-        .radio-group {
-            display: flex;
-            gap: 15px;
-        }
-
-        .radio-option {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <title>Пенсионный калькулятор</title
 </head>
 <body>
 
@@ -100,18 +53,10 @@
                 message = "Скоро пенсия!";
             } else if (gender === "female" && age >= 55 && age <= 59) {
                 message = "Скоро пенсия!";
-            } else if (gender === "male" && age >= 65 && age <= 75) {
+            } else if (gender === "male" && age >= 65) {
                 message = "Вам пора на пенсию";
-            } else if (gender === "female" && age >= 60 && age <= 75) {
+            } else if (gender === "female" && age >= 60) {
                 message = "Вам пора на пенсию";
-            } else if (gender === "male" && age >= 80) && age <= 90 {
-                message = "Вы давно на пенсии";
-            } else if (gender === "female" && age >= 80 && age <= 90) {
-                message = "Вы давно на пенсии";
-            } else if (gender === "male" && age >= 120) {
-                message = "Вам пора в могилу";
-            } else if (gender === "female" && age >= 120) {
-                message = "Вам пора в могилу";
             } else {
                 message = "Да кто ты такой?";
             }
@@ -122,8 +67,6 @@
 
 </body>
 </html>
-
-
 
 
 
