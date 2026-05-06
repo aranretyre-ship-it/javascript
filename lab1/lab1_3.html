@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ввод числа</title>
+</head>
+<body>
+    <h1>Страница "Ввод числа"</h1>
+    <p>Нажмите на ссылку ниже, чтобы перейти на главную страницу</p>
+    <a href="https://github.com/aranretyre-ship-it" id="numberLink">Получить число</a>
+    <script>
+        "use strict";
+        document.getElementById('numberLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            let number;
+            let link = this.href;
+            while (true) {
+                number = prompt("Пожалуйста, введите число больше 100:", "");
+                if (number === null) {
+                    if (confirm("Вы не ввели число. Хотите продолжить переход?")) {
+                        window.location.href = link;
+                    }
+                    return;
+                }
+                if (!isNaN(number) && Number(number) > 100) {
+                    window.location.href = link;
+                    return;
+                }
+                alert("Нужно ввести число больше 100!");
+            }
+        });
+    </script>
+</body>
+</html>
