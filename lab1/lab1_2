@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h1>Считать ворон</h1>
+    <form id="crowForm">
+        <div>
+            <label for="num">Количество ворон:</label>
+            <input type="number" id="num" name="num" min="0" required>
+        </div>
+        
+        <button type="submit" id="countBtn">Считать</button>
+    </form>
+
+    <script>
+        "use strict";
+        document.getElementById('countBtn').addEventListener('click', function() {
+            const numInput = document.getElementById('num');
+            const num = parseInt(numInput.value);
+            
+            if (isNaN(num) || num < 0) {
+                alert("Пожалуйста, введите корректное число ворон");
+                return;
+            }
+            
+            let ending;
+            
+            const lastTwoDigits = num % 100;
+            const lastDigit = num % 10;
+            
+            if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+                ending = "ворон";
+            } else {
+                switch(lastDigit) {
+                    case 1:
+                        ending = "ворона";
+                        break;
+                    case 2:
+                        ending = "вороны";
+                        break;
+                    case 3:
+                        ending = "вороны";
+                        break;
+                    case 4:
+                        ending = "вороны";
+                        break;
+                    default:
+                        ending = "ворон";
+                }
+            }
+            
+            alert(`На ветке сидит ${num} ${ending}`);
+        });
+    </script>
+</body>
+</html>
