@@ -1,104 +1,140 @@
-/**
- * Лабораторная работа №2: Функции
- * Файл: lab2.js
- */
+'use strict';
 
 /**
- * 1. Возводит число x в целую степень n.
- * @param {number} x - Основание степени.
- * @param {number} n - Показатель степени (целое число).
- * @returns {number} Результат возведения в степень.
+ * Возвращает x, возведённое в n-ную степень.
+ *
+ * @param {number} x Возводимое в степень число.
+ * @param {number} n Степень, должна быть натуральным числом.
+ * @return {number} x, возведённое в n-ную степень.
  */
 function pow(x, n) {
-    return x ** n;
+  if (n === 0) return 1;
+  if (n < 0) return 1 / pow(x, -n);
+  return x * pow(x, n - 1);
 }
 
+// console.log(pow(2, 2));  // 4
+// console.log(pow(2, 0));  // 1
+// console.log(pow(2, -2)); // 0.25
+
 /**
- * 2. Вычисляет сумму чисел от 1 до n включительно.
- * @type {Function}
- * @param {number} n - Натуральное число.
- * @returns {number} Сумма чисел.
- */
-const sumTo = new Function('n', `
-    let sum = 0;
-    for (let i = 1; i <= n; i++) {
-        sum += i;
-    }
-    return sum;
+* Возвращает сумму чисел от 1 до n,
+* используя арифметическую прогрессию
+*
+* @param {number} n число, по которое ищется сумма
+* @return {number} сумма чисел от 1 до n
+*/
+const sumToNewFunc = new Function('n', `
+  if (typeof n !== 'number' || n <= 0) {
+    return 0;
+  }
+  return (n * (n + 1)) / 2;
 `);
 
+console.log(sumToNewFunc(100));
+
+// console.log(sumTo(100)); // 5050
+
+
+
 /**
- * 3. Проверяет, является ли год високосным.
- * @param {number} year - Год для проверки.
- * @returns {boolean} True, если год високосный, иначе false.
+ * Проверяет год на високосность
+ *
+ * @param {number} year год, который нужно проверить, натуральное число
+ * @return {boolean} true, если год високосный, иначе - false.
  */
 function isLeapYear(year) {
-    return (year % 400 === 0) || (year % 4 === 0 && year % 100 !== 0);
+  return (year % 400 === 0) || (year % 4 === 0 && year % 100 !== 0);
 }
 
+// console.log(isLeapYear(2024)); //true
+// console.log(isLeapYear(2025)); //false
+// console.log(isLeapYear(2000)); //true
+// console.log(isLeapYear(1900)); //false
+
+
 /**
- * 4. Вычисляет факториал числа n рекурсивно.
- * @param {number} n - Число для расчета факториала.
- * @returns {bigint} Факториал числа в формате BigInt.
- */
+* Возвращает факториал числа n.
+*
+* @param {number} n число, для которого находится факториал
+* @return {number} факториал числа n!
+*/
 function factorial(n) {
-    const bigN = BigInt(n);
-    if (bigN === 0n || bigN === 1n) {
-        return 1n;
-    }
-    return bigN * factorial(n - 1);
+  if (n === 0)
+    return 1n;
+  return BigInt(n) * factorial(n - 1);
 }
 
+// console.log(factorial(0)); // 1n
+// console.log(factorial(5)); // 120n
+
+// Функция fib(n), возвращающая n-е число Фибоначчи
 /**
- * 5. Находит n-е число Фибоначчи (быстрое нахождение).
- * @param {number} n - Порядковый номер числа Фибоначчи.
- * @returns {bigint} n-е число Фибоначчи в формате BigInt.
+ * Возвращает n-ое число Фибоначчи.
+ *
+ * @param {number} n номер искомого числа Фибоначчи
+ * @return {BigInt} n-oe число Фибоначчи
  */
 function fib(n) {
-    if (n === 0) return 0n;
-    if (n === 1) return 1n;
-    
-    let a = 0n;
-    let b = 1n;
-    
-    for (let i = 2; i <= n; i++) {
-        let c = a + b;
-        a = b;
-        b = c;
-    }
-    
-    return b;
+  let a = 0n;
+  let b = 1n;
+  for (let i = 0; i < n; i++) {
+    let temp = b;
+    b = a + b;
+    a = temp;
+  }
+  return a;
 }
 
+console.log(fib(0));   // 0n
+console.log(fib(100)); // 354224848179261915075n
+
 /**
- * 6. Принимает число x и возвращает функцию сравнения с ним.
- * @param {number} x - Целочисленное значение для сравнения.
- * @returns {Function} Анонимная функция, принимающая y.
+ *  * Возвращает результат сравнения целых чисел y и x.
+ * 
+ * @param {number} x первый аргумент
+ * @param {number} y второй аргумент
+ * @return {Function} true, если y больше x;
+ * false, если y меньше x;
+ * null, если значения равны.
  */
 function compare(x) {
-    return function(y) {
-        if (y > x) return true;
-        if (y < x) return false;
-        return null;
-    };
+  return function (y) {
+    return y > x ? true : y < x ? false : null;
+  };
 }
 
+// console.log(compare(5)(4)); // false
+// console.log(compare(5)(5)); // null
+// console.log(compare(5)(6)); // true
+
+
 /**
- * 7. Возвращает сумму всех своих аргументов.
- * @param {...number} args - Произвольное количество чисел.
- * @returns {number} Сумма всех аргументов.
+ * Возвращает сумму всех аргументов.
+ *
+ * @param {...number} args - Аргументы для суммирования.
+ * @return {number} - Сумма всех аргументов.
  */
 function sum(...args) {
-    return args.reduce((acc, current) => acc + current, 0);
+  return args.reduce((acc, curr) => acc + curr, 0);
 }
 
+// console.log(sum());       // 0
+// console.log(sum(1));      // 1
+// console.log(sum(1, 2));   // 3
+
 /**
- * 8. Добавляет в объект символьное свойство blackSpot из глобального реестра.
- * @param {Object} obj - Исходный объект.
- * @returns {Object} Объект с добавленным свойством.
+ * Добавляет свойство с символом 'blackSpot' к объекту.
+ *
+ * @param {Object} obj Объект, к которому будет добавлено свойство.
+ * @return {Object} Объект с добавленным свойством 'blackSpot'.
  */
 function addBlackSpot(obj) {
-    const symbol = Symbol.for("blackSpot");
-    obj[symbol] = true;
-    return obj;
+  obj[Symbol.for('blackSpot')] = true;
+  return obj;
 }
+
+// Примеры использования
+let myObject = {};
+addBlackSpot(myObject);
+console.log(myObject[Symbol.for('blackSpot')]); // true
