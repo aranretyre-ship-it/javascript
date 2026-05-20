@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Скрытие текста</title>
+</head>
+<body>
+    <h1>Задание 3: Исчезающий текст</h1>
+    <button id="toggleBtn">Скрыть текст</button>
+    <div id="text">Это текст, который должен исчезать и появляться.</div>
+
+    <script>
+        const btn = document.getElementById('toggleBtn');
+        const text = document.getElementById('text');
+
+        btn.onclick = function() {
+            if (text.style.display !== 'none') {
+                text.style.display = 'none';
+                btn.textContent = 'Показать текст';
+            } else {
+                text.style.display = 'block';
+                btn.textContent = 'Скрыть текст';
+            }
+        };
+    </script>
+</body>
+</html>
