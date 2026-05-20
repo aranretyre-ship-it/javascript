@@ -16,7 +16,7 @@
             let number;
             let link = this.href;
             while (true) {
-                number = prompt("Пожалуйста, введите число больше 100:", "");
+                number = prompt("Введите число больше 100:", "");
                 if (number === null) {
                     if (confirm("Вы не ввели число. Хотите продолжить переход?")) {
                         window.location.href = link;
@@ -27,7 +27,7 @@
                     window.location.href = link;
                     return;
                 }
-                alert("Нужно ввести число больше 100!");
+                alert("Нужно ввести число большее 100");
             }
         });
     </script>
