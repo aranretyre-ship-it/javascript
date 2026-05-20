@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Меню</title>
+    <style>
+        .menu ul { display: none; }
+        .menu.open ul { display: block; }
+        .title { cursor: pointer; font-weight: bold; color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Задание 4: Раскрывающееся меню</h1>
+    <div id="menu" class="menu">
+        <span class="title">Нажми, чтобы открыть сладости</span>
+        <ul>
+            <li>Торт</li>
+            <li>Пончик</li>
+            <li>Шоколад</li>
+        </ul>
+    </div>
+
+    <script>
+        let menu = document.getElementById('menu');
+        let title = menu.querySelector('.title');
+
+        title.onclick = function() {
+            menu.classList.toggle('open');
+        };
+    </script>
+</body>
+</html>
