@@ -116,55 +116,54 @@
             });
         });
 
-        describe("addClass и removeClass", function () {
-            let obj;
+    describe("addClass и removeClass", function () {
+        let obj;
+        const setupObject = () => {
+            return {
+                className: 'open menu',
+                addClass: function (cls) {
+                    if (!this.className.split(' ').includes(cls)) {
+                        this.className += ' ' + cls;
+                }
+                this.className = this.className.trim();
+                return this;
+            },
+            removeClass: function (cls) {
+                let classes = this.className.split(' ');
+                let index = classes.indexOf(cls);
+                if (index !== -1) {
+                    classes.splice(index, 1);
+                    this.className = classes.join(' ');
+                }
+                return this;
+            }
+        };
+    };
 
-            beforeEach(function () {
-                obj = {
-                    className: 'open menu',
-                    addClass: function (cls) {
-                        if (!this.className.split(' ').includes(cls)) {
-                            this.className += ' ' + cls;
-                        }
-                        this.className = this.className.trim();
-                        return this;
-                    },
-                    removeClass: function (cls) {
-                        let classes = this.className.split(' ');
-                        let index = classes.indexOf(cls);
-                        if (index !== -1) {
-                            classes.splice(index, 1);
-                            this.className = classes.join(' ');
-                        }
-                        return this;
-                    }
-                };
-            });
+    beforeEach(function () {
+        obj = setupObject();
+    });
 
-            it("obj.addClass('newClass'); => 'open menu newClass'", function () {
-                obj.addClass('newClass');
-                assert.strictEqual(obj.className, 'open menu newClass');
-                console.log("Добавлен новый класс: " + obj.className);
-            });
+    it("obj.addClass('newClass'); => 'open menu newClass'", function () {
+        obj.addClass('newClass');
+        assert.strictEqual(obj.className, 'open menu newClass');
+    });
 
-            it("obj.addClass('open'); => 'open menu'", function () {
-                obj.addClass('open');
-                assert.strictEqual(obj.className, 'open menu');
-                console.log("Класс не изменен: " + obj.className);
-            });
+    it("obj.addClass('open'); => 'open menu'", function () {
+        obj.addClass('open');
+        assert.strictEqual(obj.className, 'open menu');
+    });
 
-            it("obj.removeClass('open'); => 'menu'", function () {
-                obj.removeClass('open');
-                assert.strictEqual(obj.className, 'menu');
-                console.log("Удален класс 'open': " + obj.className);
-            });
+    it("obj.removeClass('open'); => 'menu'", function () {
+        obj.removeClass('open');
+        assert.strictEqual(obj.className, 'menu');
+    });
 
-            it("не должен удалить класс, если его нет", function () {
-                obj.removeClass('newClass');
-                assert.strictEqual(obj.className, 'open menu');
-                console.log("Класс не изменен: " + obj.className);
-            });
-        });
+    it("не должен удалить класс, если его нет", function () {
+        obj.removeClass('newClass');
+        assert.strictEqual(obj.className, 'open menu');
+    });
+});
 
         describe("JSON conversion", function () {
             let obj;
