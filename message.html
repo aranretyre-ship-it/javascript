@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сообщения</title>
+    <style>
+        .message {
+            margin-bottom: 10px;
+        }
+        button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Сообщения</h1>
+    <div id="messages">
+        <div class="message">Сообщение 1 <button class="hideButton">Скрыть</button></div>
+        <div class="message">Сообщение 2 <button class="hideButton">Скрыть</button></div>
+        <div class="message">Сообщение 3 <button class="hideButton">Скрыть</button></div>
+    </div>
+
+    <script>
+        const hideButtons = document.querySelectorAll('.hideButton');
+
+        hideButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const messageElement = this.parentElement;
+                messageElement.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
