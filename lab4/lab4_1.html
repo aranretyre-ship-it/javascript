@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тестирование lab.js</title>
+    <title>Тестирование lab4.js</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
     <script>
@@ -30,14 +30,14 @@
                 book = new Book("Title", 2020, 1000);
             });
 
-            it("должен создать книгу с заголовком, годом публикации и ценой", function () {
+            it("Должен создать книгу с заголовком, ценой и годом публикации", function () {
                 assert.strictEqual(book.title, "Title");
                 assert.strictEqual(book.pubYear, 2020);
                 assert.strictEqual(book.price, 1000);
                 console.log("Книга создана с заголовком: " + book.title + ", годом публикации: " + book.pubYear + ", ценой: " + book.price);
             });
 
-            it("должен вывести заголовок и цену книги", function () {
+            it("Должен вывести заголовок и цену книги", function () {
                 let originalConsoleLog = console.log;
                 let logOutput = "";
                 console.log = function (msg) {
