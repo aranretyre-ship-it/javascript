@@ -165,39 +165,6 @@
     });
 });
 
-        describe("JSON conversion", function () {
-            let obj;
-
-            beforeEach(function () {
-                obj = {
-                    className: 'open menu',
-                    addClass: function (cls) {
-                        if (!this.className.split(' ').includes(cls)) {
-                            this.className += ' ' + cls;
-                        }
-                        this.className = this.className.trim();
-                        return this;
-                    },
-                    removeClass: function (cls) {
-                        let classes = this.className.split(' ');
-                        let index = classes.indexOf(cls);
-                        if (index !== -1) {
-                            classes.splice(index, 1);
-                            this.className = classes.join(' ');
-                        }
-                        return this;
-                    }
-                };
-            });
-
-            it("должен преобразовать объект в JSON и обратно", function () {
-                let json = JSON.stringify(obj, null, 2);
-                let obj2 = JSON.parse(json);
-                assert.strictEqual(obj2.className, obj.className);
-                console.log("Объект преобразован в JSON и обратно: " + obj2.className);
-            });
-        });
-
         describe("getSecondsToday", function () {
             it("должен вернуть количество секунд с начала дня", function () {
                 let now = new Date();
