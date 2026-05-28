@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Меню</title>
+    <style>
+        .menu {
+            display: none;
+            padding-left: 20px;
+        }
+        .menu.visible {
+            display: block;
+        }
+        button {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Раскрывающееся меню</h1>
+    <button id="toggleMenu">Показать меню</button>
+    <ul id="menu" class="menu">
+        <li>Пункт 1</li>
+        <li>Пункт 2</li>
+        <li>Пункт 3</li>
+    </ul>
+
+    <script>
+        const toggleMenuButton = document.getElementById('toggleMenu');
+        const menu = document.getElementById('menu');
+
+        toggleMenuButton.addEventListener('click', function() {
+            menu.classList.toggle('visible');
+            toggleMenuButton.textContent = menu.classList.contains('visible') ? 'Скрыть меню' : 'Показать меню';
+        });
+    </script>
+</body>
+</html>
