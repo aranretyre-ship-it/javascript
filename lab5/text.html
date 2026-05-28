@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Скрытие текста</title>
+</head>
+<body>
+    <div id="text">Это текст, который можно скрыть</div>
+    <button id="toggleButton">Скрыть текст</button>
+
+    <script>
+        const toggleButton = document.getElementById('toggleButton');
+        const textElement = document.getElementById('text');
+
+        toggleButton.addEventListener('click', function() {
+            if (textElement.style.display === 'none') {
+                textElement.style.display = 'block';
+                toggleButton.textContent = 'Скрыть текст';
+            } else {
+                textElement.style.display = 'none';
+                toggleButton.textContent = 'Показать текст';
+            }
+        });
+    </script>
+</body>
+</html>
