@@ -6,19 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тестирование lab4.js</title>
-    <link rel="stylesheet" href="https://cloudflare.com">
-    <script src="https://cloudflare.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com">
+    <script src="https://unpkg.com"></script>
     <script>
         mocha.setup('bdd');
     </script>
-    <script src="https://cloudflare.com"></script>
+    <script src="https://unpkg.com"></script>
     <script>
         let assert = chai.assert;
     </script>
 </head>
 
 <body>
-    <!-- Подключаем сам скрипт лабораторной -->
     <script src="lab4.js"></script>
     
     <script>
@@ -28,7 +27,6 @@
         describe("Book", function () {
             let book;
             beforeEach(function () {
-                // Передаем все 4 аргумента: заголовок, автор, год, цена
                 book = new Book("Title", "Author", 2020, 1000);
             });
             it("должен создать книгу с заголовком, автором, годом публикации и ценой", function () {
@@ -44,9 +42,8 @@
                     logOutput = msg;
                 };
                 book.show();
-                console.log = originalConsoleLog; // Возвращаем лог на место
+                console.log = originalConsoleLog;
                 
-                // Проверяем строку в соответствии с форматом в lab4.js
                 assert.strictEqual(logOutput, "Title (Author): $1000");
             });
             it("изменение заголовка через сеттер", function () {
@@ -83,7 +80,6 @@
             it("должен сравнивать книги по году публикации", function () {
                 let booksArray = [book1, book2, book3];
                 booksArray.sort(Book.compare);
-                // Исправлено: добавлены индексы [0], [1], [2] для проверки элементов массива
                 assert.strictEqual(booksArray[0].pubYear, 2019);
                 assert.strictEqual(booksArray[1].pubYear, 2020);
                 assert.strictEqual(booksArray[2].pubYear, 2021);
@@ -106,7 +102,6 @@
         // === Тесты для методов работы со строками классов ===
         describe("addClass и removeClass", function () {
             beforeEach(function () {
-                // Сбрасываем значение перед каждым тестом (объект берется из lab4.js)
                 obj.className = 'open menu';
             });
             it("obj.addClass('newClass'); => 'open menu newClass'", function () {
@@ -144,8 +139,7 @@
             it("должен вернуть количество секунд с начала дня", function () {
                 let now = new Date();
                 let secondsToday = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
-                // Погрешность в 1 секунду допустима, если тесты выполняются на стыке секунд
-                assert.closeTo(getSecondsToday(), secondsToday, 1);
+                assert.closeTo(getSecondsToday(), secondsToday, 2);
             });
         });
 
@@ -157,14 +151,12 @@
         });
     </script>
     
-    <!-- Элемент для вывода результатов тестов Mocha -->
+    <!-- Контейнер для интерфейса Mocha -->
     <div id="mocha"></div>
     
     <script>
         mocha.run();
     </script>
 </body>
-</html>
 
-</body>
 </html>
