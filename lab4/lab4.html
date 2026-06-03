@@ -25,13 +25,14 @@
         describe("Book", function () {
             let book;
             beforeEach(function () {
-                book = new Book("Title", 2020, 1000);
+                book = new Book("Title", "Author", 2020, 1000);
             });
-            it("должен создать книгу с заголовком, годом публикации и ценой", function () {
+            it("должен создать книгу с заголовком, автором, годом публикации и ценой", function () {
                 assert.strictEqual(book.title, "Title");
+                assert.strictEqual(book.author, "Author"); // Добавляем проверку автора
                 assert.strictEqual(book.pubYear, 2020);
                 assert.strictEqual(book.price, 1000);
-                console.log("Книга создана с заголовком: " + book.title + ", годом публикации: " + book.pubYear + ", ценой: " + book.price);
+                console.log("Книга создана с заголовком: " + book.title + ", автором: " + book.author + ", годом публикации: " + book.pubYear + ", ценой: " + book.price);
             });
             it("должен вывести заголовок и цену книги", function () {
                 let originalConsoleLog = console.log;
@@ -71,6 +72,15 @@
                 assert.throws(() => { book.price = -2000; }, Error);
                 console.log("Попытка установить отрицательную цену вызвала ошибку");
             });
+            it("book.author = 'New Author'; =>'New Author'", function () {
+                book.author = "New Author";
+                assert.strictEqual(book.author, "New Author");
+                console.log("Новый автор книги: " + book.author);
+            });
+            it("assert.throws(() => { book.author = ''; }, Error)", function () {
+                assert.throws(() => { book.author = ""; }, Error);
+                console.log("Попытка установить пустой автор вызвала ошибку");
+    });
         });
         describe("Book.compare", function () {
             let book1, book2, book3;
