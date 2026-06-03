@@ -1,149 +1,207 @@
-// Класс Book представляет книгу с заголовком, годом публикации, ценой и автором
+/**
+ * Класс, представляющий книгу.
+ */
 class Book {
-    // Объявляем приватное поле price через #
+    /** @type {number} Защищенное свойство года издания */
+    _pubYear;
+    /** @type {number} Приватное свойство цены */
     #price;
 
-    constructor(title, author, pubYear, price) {
-        this.title = title;     // Вызывает сеттер title
-        this.author = author;   // Вызывает сеттер author
-        this.pubYear = pubYear; // Вызывает сеттер pubYear (для валидации)
-        this.price = price;     // Вызывает сеттер price (для валидации)
+    /**
+     * Создает экземпляр книги.
+     * @param {string} title - Название книги.
+     * @param {number} pubYear - Год издания.
+     * @param {number} price - Цена книги.
+     */
+    constructor(title, pubYear, price) {
+        this.title = title;
+        this.pubYear = pubYear;
+        this.price = price;
     }
 
-    // Геттер и сеттер для title
-    get title() {
-        return this._title;
-    }
+    /** @returns {string} Название книги. */
+    get title() { return this._title; }
+    /** @param {string} value - Название (не должно быть пустым). */
     set title(value) {
-        if (value === "") {
-            throw new Error("Заголовок не может быть пустым");
+        if (typeof value !== 'string' || value.trim() === '') {
+            console.error("Ошибка: Название не может быть пустым.");
+            return;
         }
         this._title = value;
     }
 
-    // Геттер и сеттер для author
-    get author() {
-        return this._author;
-    }
-    set author(value) {
-        if (value === "") {
-            throw new Error("Автор не может быть пустым");
-        }
-        this._author = value;
-    }
-
-    // Защищённый геттер и сеттер для pubYear (используем конвенцию с _)
-    get pubYear() {
-        return this._pubYear;
-    }
+    /** @returns {number} Год издания. */
+    get pubYear() { return this._pubYear; }
+    /** @param {number} value - Год (должен быть положительным числом). */
     set pubYear(value) {
         if (value <= 0) {
-            throw new Error("Год публикации должен быть положительным числом");
+            console.error("Ошибка: Год издания должен быть положительным.");
+            return;
         }
         this._pubYear = value;
     }
 
-    // Приватный геттер и сеттер для price (работают с приватным полем #price)
-    get price() {
-        return this.#price;
-    }
+    /** @returns {number} Цена книги. */
+    get price() { return this.#price; }
+    /** @param {number} value - Цена (должна быть положительной). */
     set price(value) {
         if (value <= 0) {
-            throw new Error("Цена должна быть положительным числом");
+            console.error("Ошибка: Цена должна быть положительной.");
+            return;
         }
         this.#price = value;
     }
 
-    // Метод для вывода заголовка и цены книги в консоль
+    /**
+     * Выводит в консоль название и цену книги.
+     */
     show() {
-        console.log(`${this.title} (${this.author}): $${this.price}`);
+        console.log(`Книга: "${this.title}", Цена: ${this.price} руб.`);
     }
 
-    // Статический метод для сравнения книг по году публикации
-    static compare(a, b) {
-        return a.pubYear - b.pubYear;
+    /**
+     * Статический метод для сравнения книг по году издания.
+     * @param {Book} bookA - Первая книга.
+     * @param {Book} bookB - Вторая книга.
+     * @returns {number} Результат сравнения.
+     */
+    static compare(bookA, bookB) {
+        return bookA.pubYear - bookB.pubYear;
     }
 }
 
-// === Проверка Задания 1 и 2 ===
-const book1 = new Book("1984", "George Orwell", 1949, 15);
-const book2 = new Book("Brave New World", "Aldous Huxley", 1932, 12);
-const book3 = new Book("Fahrenheit 451", "Ray Bradbury", 1953, 18);
+// Тестирование заданий 1-3
+console.log("--- Задания 1-3 (Класс Book) ---");
+const myBook = new Book("Чистый код", 2008, 1500);
+myBook.show(); // Вывод информации
 
-book1.show();
+// Проверка валидации (ошибки запишутся в консоль)
+console.log("Попытка записать некорректные данные:");
+myBook.title = ""; 
+myBook.price = -100;
 
-// Пробуем изменить значения свойств (проверка инкапсуляции)
-try {
-    book1.price = -10; // Вызовет ошибку валидации
-} catch (e) {
-    console.log("Ловушка сеттера price:", e.message);
-}
-
-// === Проверка Задания 3 (Сортировка) ===
-const books = [book1, book2, book3];
+// Сортировка книг по году
+const books = [
+    new Book("Книга A", 2020, 500),
+    new Book("Книга B", 2010, 300),
+    new Book("Книга C", 2015, 400)
+];
 books.sort(Book.compare);
+console.log("Отсортированные книги (по году):", books.map(b => `${b.title} (${b.pubYear}г.)`));
 
-console.log("\nОтсортированные книги по году публикации:");
-books.forEach(book => book.show());
 
-// === Проверка Задания 4 (isEmpty) ===
+// ==========================================
+// ЗАДАНИЕ 4 (Функция isEmpty)
+// ==========================================
+
+/**
+ * Проверяет, пуст ли объект (включая символьные и неперечисляемые свойства).
+ * @param {Object} obj - Объект для проверки.
+ * @returns {boolean} true, если свойств нет, иначе false.
+ */
 function isEmpty(obj) {
-    // Если общая сумма свойств и символов равна 0 -> объект пуст
-    return Object.getOwnPropertyNames(obj).length === 0 && Object.getOwnPropertySymbols(obj).length === 0;
+    return Reflect.ownKeys(obj).length === 0;
 }
 
-console.log("\nПроверка isEmpty:");
-console.log(isEmpty({})); // true
-console.log(isEmpty({ [Symbol()]: true })); // false (теперь работает верно!)
-console.log(isEmpty(Object.defineProperty({}, 'name', { value: 'John' }))); // false
+console.log("\n--- Задание 4 (isEmpty) ---");
+console.log("Пустой объект {}:", isEmpty({})); // true
+console.log("Объект с Symbol {[Symbol()]: true}:", isEmpty({ [Symbol()]: true })); // false
 
-// === Проверка Задания 5 (Работа с классами строк) ===
+const nonEnumObj = {};
+Object.defineProperty(nonEnumObj, 'name', { value: 'John' });
+console.log("Объект с неперечисляемым свойством 'name':", isEmpty(nonEnumObj)); // false
+
+
+// ==========================================
+// ЗАДАНИЯ 5 и 6 (Объект obj и методы addClass/removeClass)
+// ==========================================
+
+/** @type {Object} */
 let obj = {
     className: 'open menu',
+
+    /**
+     * Добавляет класс в список className, если его там еще нет.
+     * @param {string} cls - Имя добавляемого класса.
+     * @returns {Object} Текущий объект (для цепочки вызовов).
+     */
     addClass(cls) {
         let classes = this.className ? this.className.split(' ') : [];
         if (!classes.includes(cls)) {
             classes.push(cls);
-            this.className = classes.join(' ').trim();
         }
+        this.className = classes.join(' ');
         return this;
     },
+
+    /**
+     * Удаляет класс из списка className.
+     * @param {string} cls - Имя удаляемого класса.
+     * @returns {Object} Текущий объект (для цепочки вызовов).
+     */
     removeClass(cls) {
         let classes = this.className ? this.className.split(' ') : [];
-        let index = classes.indexOf(cls);
-        if (index !== -1) {
-            classes.splice(index, 1);
-            this.className = classes.join(' ').trim();
-        }
+        this.className = classes.filter(c => c !== cls).join(' ');
         return this;
     }
 };
 
-console.log("\nРабота с className:");
-obj.addClass('new-class').removeClass('menu');
-console.log(`Текущие классы: "${obj.className}"`); // 'open new-class'
+console.log("\n--- Задание 5 (Методы addClass/removeClass) ---");
+obj.addClass('new').addClass('open').removeClass('menu');
+console.log("Результат className:", obj.className); // "open new" (без лишних пробелов и дублей)
 
-// === Проверка Задания 6 (JSON) ===
-let jsonObj = JSON.stringify(obj, null, 2);
-console.log("\nОбъект в формате JSON:");
-console.log(jsonObj);
 
-let obj2 = JSON.parse(jsonObj);
-console.log("Объекты равны? ", JSON.stringify(obj) === JSON.stringify(obj2)); // true
+console.log("\n--- Задание 6 (Преобразование в JSON) ---");
+// Превращаем в JSON с отступом в 2 пробела
+const jsonStr = JSON.stringify(obj, null, 2);
+console.log("JSON строка:\n" + jsonStr);
 
-// === Проверка Задания 7 (Секунды) ===
+// Декодируем обратно
+const obj2 = JSON.parse(jsonStr);
+console.log("Проверка равенства ссылок (obj === obj2):", obj === obj2); // false
+console.log("Проверка равенства содержимого (obj.className === obj2.className):", obj.className === obj2.className); // true
+
+
+// ==========================================
+// ЗАДАНИЕ 7 (getSecondsToday)
+// ==========================================
+
+/**
+ * Возвращает количество секунд, прошедших с начала сегодняшнего дня.
+ * @returns {number} Количество секунд.
+ */
 function getSecondsToday() {
     let now = new Date();
     let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    return Math.floor((now - today) / 1000);
+    let diff = now - today; // Разница в миллисекундах
+    return Math.round(diff / 1000);
 }
-console.log("\nСекунд с начала дня: ", getSecondsToday());
 
-// === Проверка Задания 8 (Формат даты) ===
+console.log("\n--- Задание 7 (getSecondsToday) ---");
+console.log(`Прошло секунд с начала сегодняшнего дня: ${getSecondsToday()}`);
+
+
+// ==========================================
+// ЗАДАНИЕ 8 (formatDate)
+// ==========================================
+
+/**
+ * Форматирует объект даты в строку формата "дд.мм.гг".
+ * @param {Date} date - Дата для форматирования.
+ * @returns {string} Строка в формате "дд.мм.гг".
+ */
 function formatDate(date) {
-    let day = String(date.getDate()).padStart(2, '0');
-    let month = String(date.getMonth() + 1).padStart(2, '0');
-    let year = String(date.getFullYear()).slice(-2);
+    let day = date.getDate();
+    if (day < 10) day = '0' + day;
+
+    let month = date.getMonth() + 1; // Месяцы в JS начинаются с 0
+    if (month < 10) month = '0' + month;
+
+    let year = date.getFullYear().toString().slice(-2); // Берем последние 2 цифры года
+
     return `${day}.${month}.${year}`;
 }
-console.log("Текущая дата (дд.мм.гг): ", formatDate(new Date()));
+
+console.log("\n--- Задание 8 (formatDate) ---");
+console.log("Текущая дата:", formatDate(new Date())); // Например: 04.06.26
+console.log("Кастомная дата (1 января 2020):", formatDate(new Date(2020, 0, 1))); // 01.01.20
