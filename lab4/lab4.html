@@ -1,120 +1,49 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тестирование lab4.js</title>
-    
+    <title>Лабораторная работа №4</title>
     <style>
-        body { font: 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; margin: 40px 50px; color: #2c3e50; }
-        .suite { margin-bottom: 25px; }
-        .suite-title { font-size: 22px; font-weight: bold; margin-bottom: 10px; color: #333; }
-        .tests-list { list-style: none; padding-left: 15px; margin: 0; }
-        .test-item { margin: 6px 0; font-size: 15px; display: flex; align-items: center; }
-        .icon { color: #00d6b2; font-weight: bold; margin-right: 8px; font-size: 18px; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .info {
+            background-color: #e8f4fd;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
     </style>
+    <!-- Подключаем наш JS-файл -->
+    <script src="lab4.js" defer></script>
 </head>
-
 <body>
-    <!-- Подключаем вашу лабораторную -->
-    <script src="lab4.js"></script>
-    
-    <!-- Контейнер для вывода результатов -->
-    <div id="mocha"></div>
 
-    <script>
-        'use strict';
-
-        // Создаем собственную мини-систему тестирования, защищенную от блокировок
-        const container = document.getElementById('mocha');
-        let currentSuiteEl = null;
-
-        window.describe = function(name, fn) {
-            const suiteDiv = document.createElement('div');
-            suiteDiv.className = 'suite';
-            
-            const title = document.createElement('div');
-            title.className = 'suite-title';
-            title.textContent = name;
-            suiteDiv.appendChild(title);
-            
-            const list = document.createElement('ul');
-            list.className = 'tests-list';
-            suiteDiv.appendChild(list);
-            
-            container.appendChild(suiteDiv);
-            
-            currentSuiteEl = list;
-            fn();
-        };
-
-        window.it = function(name, fn) {
-            const li = document.createElement('li');
-            li.className = 'test-item';
-            li.innerHTML = `<span class="icon">✓</span> <span>${name}</span>`;
-            if (currentSuiteEl) {
-                currentSuiteEl.appendChild(li);
-            }
-        };
-
-        window.beforeEach = function(fn) { 
-            // Заглушка для совместимости структуры тестов
-        };
-
-        window.chai = {
-            assert: {
-                strictEqual: () => true,
-                throws: () => true,
-                isTrue: () => true,
-                isFalse: () => true,
-                closeTo: () => true
-            }
-        };
-        window.assert = window.chai.assert;
-
-        // === Окружение готово, запускаем ваши тесты ===
+    <div class="container">
+        <h1>Лабораторная работа №4</h1>
+        <p><strong>Тема:</strong> Объекты, дата и время в JavaScript</p>
         
-        describe("Book", function () {
-            it("должен создать книгу с заголовком, годом публикации и ценой");
-            it("должен вывести заголовок и цену книги");
-            it("book.title = 'New Title'; => 'New Title'");
-            it("assert.throws(() => { book.title = ''; }, Error)");
-            it("assert.strictEqual(book.pubYear, 2021);");
-            it("assert.throws(() => { book.pubYear = -2021; }, Error);");
-            it("assert.strictEqual(book.price, 2000);");
-            it("assert.throws(() => { book.price = -2000; }, Error)");
-        });
+        <div class="info">
+            <strong>Инструкция:</strong><br>
+            Все результаты выполнения заданий выводятся в консоль браузера.<br>
+            Чтобы открыть консоль, нажмите <strong>F12</strong> (или правый клик мыши -> <em>Исследовать элемент / Посмотреть код</em> -> вкладка <strong>Консоль / Console</strong>).
+        </div>
+    </div>
 
-        describe("Book.compare", function () {
-            it("должен сравнивать книги по году публикации");
-        });
-
-        describe("isEmpty", function () {
-            it("должен вернуть true для пустого объекта");
-            it("должен вернуть false для непустого объекта");
-        });
-
-        describe("addClass и removeClass", function () {
-            it("obj.addClass('newClass'); => 'open menu newClass'");
-            it("obj.addClass('open'); => 'open menu'");
-            it("obj.removeClass('open'); => 'menu'");
-            it("не должен удалить класс, если его нет");
-        });
-
-        describe("JSON conversion", function () {
-            it("должен преобразовать объект в JSON и обратно");
-        });
-
-        describe("getSecondsToday", function () {
-            it("должен вернуть количество секунд с начала дня");
-        });
-
-        describe("formatDate", function () {
-            it("let date = new Date(2023, 0, 1);=> 01.01.23");
-        });
-    </script>
 </body>
-
 </html>
