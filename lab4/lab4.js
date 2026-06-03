@@ -1,7 +1,8 @@
-// Класс Book представляет книгу с заголовком, годом публикации и ценой
+// Класс Book представляет книгу с заголовком, годом публикации, ценой и автором
 class Book {
-    constructor(title, pubYear, price) {
+    constructor(title, author, pubYear, price) {
         this.title = title;   // Используем сеттер для валидации
+        this.author = author; // Добавлено новое свойство author
         this._pubYear = pubYear; // Защищённое свойство
         this.price = price;    // Используем сеттер для валидации
     }
@@ -17,6 +18,19 @@ class Book {
             throw new Error("Заголовок не может быть пустым");
         }
         this._title = value;
+    }
+
+    // Геттер для получения автора книги
+    get author() {
+        return this._author;
+    }
+
+    // Сеттер для установки автора книги
+    set author(value) {
+        if (value === "") {
+            throw new Error("Автор не может быть пустым");
+        }
+        this._author = value;
     }
 
     // Защищённый геттер для получения года публикации книги
@@ -45,9 +59,9 @@ class Book {
         this._price = value;
     }
 
-    // Метод для вывода заголовка и цены книги в консоль
+    // Метод для вывода заголовка, автора и цены книги в консоль
     show() {
-        console.log(`this.title:{this.title}:this.title:${this.price}`);
+        console.log(`this.title({this.title} (this.title({this.author}): $${this.price}`);
     }
 
     // Статический метод для сравнения книг по году публикации
@@ -57,9 +71,9 @@ class Book {
 }
 
 // Создание экземпляров класса Book
-const book1 = new Book("1984", 1949, 15);
-const book2 = new Book("Brave New World", 1932, 12);
-const book3 = new Book("Fahrenheit 451", 1953, 18);
+const book1 = new Book("1984", "George Orwell", 1949, 15);
+const book2 = new Book("Brave New World", "Aldous Huxley", 1932, 12);
+const book3 = new Book("Fahrenheit 451", "Ray Bradbury", 1953, 18);
 
 // Вызов метода show для каждого экземпляра
 book1.show();
@@ -111,17 +125,18 @@ let obj = {
 
 // Пример использования методов добавления и удаления классов
 obj.addClass('new-class').removeClass('menu');
-console.log(obj.className); // 'open new-class'
+console.log(`Текущие классы: "${obj.className}"`); // 'open new-class'
 
 // Преобразование объекта в JSON
 let jsonObj = JSON.stringify(obj, null, 2);
+console.log("Объект в формате JSON:");
 console.log(jsonObj);
 
 // Декодирование JSON обратно в объект
 let obj2 = JSON.parse(jsonObj);
 
 // Проверка равенства объектов
-console.log(JSON.stringify(obj) === JSON.stringify(obj2)); // true
+console.log("Объекты равны? ", JSON.stringify(obj) === JSON.stringify(obj2)); // true
 
 // Функция для получения количества секунд с начала текущего дня
 function getSecondsToday() {
@@ -139,9 +154,9 @@ function formatDate(date) {
     return `day.{day}.day.{month}.${year}`;
 }
 
-// Пример использования
-console.log(getSecondsToday()); // Выводит количество секунд с начала текущего дня
+// Примеры использования
+console.log("Количество секунд с начала текущего дня: ", getSecondsToday());
 
-// Пример использования форматирования даты
 let now = new Date();
-console.log(formatDate(now)); // Выводит текущую дату в формате "дд.мм.гг"
+console.log("Текущая дата в формате 'дд.мм.гг': ", formatDate(now));
+
