@@ -21,33 +21,39 @@ class Book {
 
     /** @returns {string} Название книги. */
     get title() { return this._title; }
-    /** @param {string} value - Название (не должно быть пустым). */
+    /** 
+     * @param {string} value - Название (не должно быть пустым).
+     * @throws {Error} Если название пустое.
+     */
     set title(value) {
         if (typeof value !== 'string' || value.trim() === '') {
-            console.error("Ошибка: Название не может быть пустым.");
-            return;
+            throw new Error("Название книги не может быть пустым.");
         }
         this._title = value;
     }
 
     /** @returns {number} Год издания. */
     get pubYear() { return this._pubYear; }
-    /** @param {number} value - Год (должен быть положительным числом). */
+    /** 
+     * @param {number} value - Год (должен быть положительным числом).
+     * @throws {Error} Если год неположительный.
+     */
     set pubYear(value) {
         if (value <= 0) {
-            console.error("Ошибка: Год издания должен быть положительным.");
-            return;
+            throw new Error("Год издания должен быть положительным числом.");
         }
         this._pubYear = value;
     }
 
     /** @returns {number} Цена книги. */
     get price() { return this.#price; }
-    /** @param {number} value - Цена (должна быть положительной). */
+    /** 
+     * @param {number} value - Цена (должна быть положительной).
+     * @throws {Error} Если цена неположительная.
+     */
     set price(value) {
         if (value <= 0) {
-            console.error("Ошибка: Цена должна быть положительной.");
-            return;
+            throw new Error("Цена должна быть положительным числом.");
         }
         this.#price = value;
     }
@@ -75,10 +81,20 @@ console.log("--- Задания 1-3 (Класс Book) ---");
 const myBook = new Book("Чистый код", 2008, 1500);
 myBook.show(); // Вывод информации
 
-// Проверка валидации (ошибки запишутся в консоль)
+// Проверка валидации (теперь перехватываем ошибки через try...catch)
 console.log("Попытка записать некорректные данные:");
-myBook.title = ""; 
-myBook.price = -100;
+
+try {
+    myBook.title = ""; // Вызовет ошибку
+} catch (error) {
+    console.warn("[Тест валидации] Успешно перехвачена ошибка:", error.message);
+}
+
+try {
+    myBook.price = -100; // Вызовет ошибку
+} catch (error) {
+    console.warn("[Тест валидации] Успешно перехвачена ошибка:", error.message);
+}
 
 // Сортировка книг по году
 const books = [
@@ -148,15 +164,13 @@ let obj = {
 
 console.log("\n--- Задание 5 (Методы addClass/removeClass) ---");
 obj.addClass('new').addClass('open').removeClass('menu');
-console.log("Результат className:", obj.className); // "open new" (без лишних пробелов и дублей)
+console.log("Результат className:", obj.className); // "open new"
 
 
 console.log("\n--- Задание 6 (Преобразование в JSON) ---");
-// Превращаем в JSON с отступом в 2 пробела
 const jsonStr = JSON.stringify(obj, null, 2);
 console.log("JSON строка:\n" + jsonStr);
 
-// Декодируем обратно
 const obj2 = JSON.parse(jsonStr);
 console.log("Проверка равенства ссылок (obj === obj2):", obj === obj2); // false
 console.log("Проверка равенства содержимого (obj.className === obj2.className):", obj.className === obj2.className); // true
@@ -173,7 +187,7 @@ console.log("Проверка равенства содержимого (obj.cla
 function getSecondsToday() {
     let now = new Date();
     let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    let diff = now - today; // Разница в миллисекундах
+    let diff = now - today;
     return Math.round(diff / 1000);
 }
 
@@ -194,14 +208,14 @@ function formatDate(date) {
     let day = date.getDate();
     if (day < 10) day = '0' + day;
 
-    let month = date.getMonth() + 1; // Месяцы в JS начинаются с 0
+    let month = date.getMonth() + 1;
     if (month < 10) month = '0' + month;
 
-    let year = date.getFullYear().toString().slice(-2); // Берем последние 2 цифры года
+    let year = date.getFullYear().toString().slice(-2);
 
     return `${day}.${month}.${year}`;
 }
 
 console.log("\n--- Задание 8 (formatDate) ---");
-console.log("Текущая дата:", formatDate(new Date())); // Например: 04.06.26
-console.log("Кастомная дата (1 января 2020):", formatDate(new Date(2020, 0, 1))); // 01.01.20
+console.log("Текущая дата:", formatDate(new Date()));
+console.log("Кастомная дата (1 января 2020):", formatDate(new Date(2020, 0, 1)));
