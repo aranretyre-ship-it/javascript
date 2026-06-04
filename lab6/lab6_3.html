@@ -30,10 +30,6 @@
         const div = document.getElementById('myDiv');
         let isEditing = false;
         let originalContent = '';
-
-        // =========================================================================
-        // ЭТАП 1: Загрузка текста из localStorage при открытии/перезагрузке страницы
-        // =========================================================================
         const savedText = localStorage.getItem('savedDivContent');
         if (savedText) {
             div.innerHTML = savedText; // Если текст был сохранен ранее, заменяем им стандартный текст
@@ -62,10 +58,6 @@
                 const newText = textarea.value;
                 div.innerHTML = newText;
                 isEditing = false;
-
-                // =========================================================================
-                // ЭТАП 2: Сохранение измененного текста в localStorage
-                // =========================================================================
                 localStorage.setItem('savedDivContent', newText);
             }
             // Escape — Отмена редактирования
