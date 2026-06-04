@@ -54,12 +54,8 @@
         'use strict';
 
         const table = document.getElementById('editableTable');
-        const cells = table.querySelectorAll('td'); // Получаем все ячейки
+        const cells = table.querySelectorAll('td');
         let editingCell = null;
-
-        // =========================================================================
-        // 1. ЗАГРУЗКА: При запуске проверяем sessionStorage для каждой ячейки
-        // =========================================================================
         cells.forEach((cell, index) => {
             const savedData = sessionStorage.getItem('cell_' + index);
             if (savedData !== null) {
@@ -93,20 +89,12 @@
             cell.appendChild(controls);
             cell.classList.add('editing');
             textarea.focus();
-
-            // Кнопка ОК
             okBtn.onclick = function() {
                 const newValue = textarea.value;
                 finishEdit(cell, newValue);
-                
-                // =========================================================================
-                // 2. СОХРАНЕНИЕ: Находим индекс текущей ячейки и сохраняем её текст
-                // =========================================================================
                 const cellIndex = Array.from(cells).indexOf(cell);
                 sessionStorage.setItem('cell_' + cellIndex, newValue);
             };
-
-            // Кнопка ОТМЕНА
             cancelBtn.onclick = function() {
                 finishEdit(cell, originalHTML);
             };
