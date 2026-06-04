@@ -16,16 +16,20 @@
         }
         .editing {
             background-color: #ffffcc;
+            padding: 0;
         }
         textarea {
             width: 100%;
             margin: 0;
-            padding: 0;
+            padding: 8px;
             resize: none;
             box-sizing: border-box;
+            border: none;
+            display: block;
         }
         .edit-controls {
             margin-top: 5px;
+            padding: 5px;
         }
         .edit-controls button {
             margin-right: 5px;
@@ -48,58 +52,78 @@
 
     <script>
         'use strict';
-        
+
         const table = document.getElementById('editableTable');
+        const cells = table.querySelectorAll('td'); // Получаем все ячейки
         let editingCell = null;
-        
+
+        // =========================================================================
+        // 1. ЗАГРУЗКА: При запуске проверяем sessionStorage для каждой ячейки
+        // =========================================================================
+        cells.forEach((cell, index) => {
+            const savedData = sessionStorage.getItem('cell_' + index);
+            if (savedData !== null) {
+                cell.innerHTML = savedData;
+            }
+        });
+
         function startEdit(cell) {
             if (editingCell) return;
-            
+
             editingCell = cell;
             const originalHTML = cell.innerHTML;
-            
+
             const textarea = document.createElement('textarea');
             textarea.value = originalHTML;
-            textarea.style.width = '100%';
-            textarea.style.height = '60px';
-            textarea.style.resize = 'none';
-            
+            textarea.style.height = cell.offsetHeight + 'px';
+
             const okBtn = document.createElement('button');
             okBtn.textContent = 'OK';
+            
             const cancelBtn = document.createElement('button');
             cancelBtn.textContent = 'ОТМЕНА';
-            
+
             const controls = document.createElement('div');
             controls.className = 'edit-controls';
             controls.appendChild(okBtn);
             controls.appendChild(cancelBtn);
-            
+
             cell.innerHTML = '';
             cell.appendChild(textarea);
             cell.appendChild(controls);
             cell.classList.add('editing');
-            
             textarea.focus();
-            
+
+            // Кнопка ОК
             okBtn.onclick = function() {
-                cell.innerHTML = textarea.value;
-                cell.classList.remove('editing');
-                editingCell = null;
+                const newValue = textarea.value;
+                finishEdit(cell, newValue);
+                
+                // =========================================================================
+                // 2. СОХРАНЕНИЕ: Находим индекс текущей ячейки и сохраняем её текст
+                // =========================================================================
+                const cellIndex = Array.from(cells).indexOf(cell);
+                sessionStorage.setItem('cell_' + cellIndex, newValue);
             };
-            
+
+            // Кнопка ОТМЕНА
             cancelBtn.onclick = function() {
-                cell.innerHTML = originalHTML;
-                cell.classList.remove('editing');
-                editingCell = null;
+                finishEdit(cell, originalHTML);
             };
         }
-        
+
+        function finishEdit(cell, content) {
+            cell.innerHTML = content;
+            cell.classList.remove('editing');
+            editingCell = null;
+        }
+
         table.addEventListener('click', function(e) {
             const cell = e.target.closest('td');
             if (!cell) return;
             if (editingCell === cell) return;
             if (editingCell !== null) return;
-            
+
             startEdit(cell);
         });
     </script>
